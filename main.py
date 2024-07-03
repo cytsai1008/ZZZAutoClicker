@@ -13,9 +13,13 @@ time.sleep(1)
 
 
 def active_window_process_name():
-    pid = win32process.GetWindowThreadProcessId(
-        win32gui.GetForegroundWindow())  # This produces a list of PIDs the active window relates to
-    return psutil.Process(pid[-1]).name()  # pid[-1] is the most likely to survive to last longer
+    try:
+        pid = win32process.GetWindowThreadProcessId(
+            win32gui.GetForegroundWindow())  # This produces a list of PIDs the active window relates to
+        return psutil.Process(pid[-1]).name()  # pid[-1] is the most likely to survive to last longer
+    except psutil.NoSuchProcess:  # Catch the error caused by the process no longer existing
+        # retry
+        return active_window_process_name()
 
 
 def keep_active():
@@ -53,7 +57,7 @@ while True:
 
     screen_text = screen_ocr.screen_ocr()
 
-    if "市政維護即將結束" not in screen_text or "UID" in screen_text:
+    if "市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text:
         print("Got it")
         break
 
