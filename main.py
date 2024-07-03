@@ -22,16 +22,6 @@ def active_window_process_name():
         return active_window_process_name()
 
 
-def keep_active():
-    while True:
-        proc_name = active_window_process_name()
-        if proc_name.lower() == "zenlesszonezero.exe":
-            break
-        else:
-            print(f"Current window is {proc_name}")
-        time.sleep(.5)
-
-
 def press_button(button, wait_time=0.1):
     gamepad.press_button(button=button)
     gamepad.update()
@@ -58,8 +48,12 @@ while True:
     screen_text = screen_ocr.screen_ocr()
 
     if "市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text:
-        print("Got it")
-        break
+        print(screen_text)
+        screen_text = screen_ocr.screen_ocr()
+        if "市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text:
+            print(screen_text)
+            print("Got it")
+            break
 
     randsec = (random.randint(0, 5)) / 10
     time.sleep(7.4 + randsec)
