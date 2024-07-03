@@ -6,6 +6,8 @@ import vgamepad as vg
 import win32gui
 import win32process
 
+import screen_ocr
+
 gamepad = vg.VX360Gamepad()
 time.sleep(1)
 
@@ -14,6 +16,24 @@ def active_window_process_name():
     pid = win32process.GetWindowThreadProcessId(
         win32gui.GetForegroundWindow())  # This produces a list of PIDs the active window relates to
     return psutil.Process(pid[-1]).name()  # pid[-1] is the most likely to survive to last longer
+
+
+def keep_active():
+    while True:
+        proc_name = active_window_process_name()
+        if proc_name.lower() == "zenlesszonezero.exe":
+            break
+        else:
+            print(f"Current window is {proc_name}")
+        time.sleep(.5)
+
+
+def press_button(button, wait_time=0.1):
+    gamepad.press_button(button=button)
+    gamepad.update()
+    time.sleep(wait_time)
+    gamepad.release_button(button=button)
+    gamepad.update()
 
 
 while True:
@@ -25,27 +45,23 @@ while True:
     time.sleep(1)
 
 while True:
-    gamepad.press_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_A)  # press the A button
-    gamepad.update()  # send the updated state to the computer
-    print("A pressed")
-
     randsec = (random.randint(0, 5)) / 10
-    time.sleep(.5 + randsec)
-
-    gamepad.release_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_A)  # release the A button
-    gamepad.update()  # send the updated state to the computer
+    press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_A, 0.5 + randsec)
     print("A released")
+
+    keep_active()
+
+    screen_text = screen_ocr.screen_ocr()
+
+    if "市政維護即將結束" not in screen_text or "UID" in screen_text:
+        print("Got it")
+        break
 
     randsec = (random.randint(0, 5)) / 10
     time.sleep(7.4 + randsec)
 
-    gamepad.press_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_B)
-    gamepad.update()
-    print("B pressed")
-
     randsec = (random.randint(0, 5)) / 10
-    time.sleep(.5 + randsec)
-
-    gamepad.release_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_B)
-    gamepad.update()
+    press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_B, 0.5 + randsec)
     print("B released")
+
+    keep_active()

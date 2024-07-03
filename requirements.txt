@@ -1,3 +1,6 @@
 vgamepad
 pywin32
 psutil
+
+pytesseract
+pillow
