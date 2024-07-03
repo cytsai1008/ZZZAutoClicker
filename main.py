@@ -43,7 +43,7 @@ while True:
     press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_A, 0.5 + randsec)
     print("A released")
 
-    keep_active()
+    # keep_active()
 
     screen_text = screen_ocr.screen_ocr()
 
@@ -62,4 +62,4 @@ while True:
     press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_B, 0.5 + randsec)
     print("B released")
 
-    keep_active()
+    # keep_active()
