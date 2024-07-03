@@ -1,5 +1,3 @@
-import time
-
 import pytesseract
 from PIL import ImageGrab
 from win32gui import FindWindow, GetWindowRect
@@ -16,4 +14,6 @@ def screen_ocr():
 def get_window_rect():
     hwnd = FindWindow(None, "ZenlessZoneZero")
     rect = GetWindowRect(hwnd)
+    if type(rect) != tuple:
+        rect = (0, 0, 1920, 1080)
     return rect
