@@ -1,0 +1,3 @@
+vgamepad
+pywin32
+psutil
