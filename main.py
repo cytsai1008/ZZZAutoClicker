@@ -44,16 +44,25 @@ while True:
     print("A released")
 
     # keep_active()
-
+    """
     screen_text = screen_ocr.screen_ocr()
 
-    if ("市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text) or "UID" in screen_text:
+    
+    if (
+            (
+                    "市政維護" not in screen_text and
+                    "HoYoLAB" not in screen_text and
+                    "進入遊戲" not in screen_text and
+                    r"2024/07/04" not in screen_text) or
+            "UID" in screen_text):
         print(screen_text)
         screen_text = screen_ocr.screen_ocr()
-        if ("市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text) or "UID" in screen_text:
+        if (
+                "市政維護" not in screen_text and "HoYoLAB" not in screen_text and "進入遊戲" not in screen_text) or "UID" in screen_text:
             print(screen_text)
             print("Got it")
             break
+    """
 
     randsec = (random.randint(0, 5)) / 10
     time.sleep(7.4 + randsec)
